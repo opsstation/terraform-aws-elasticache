@@ -6,7 +6,7 @@ module "labels" {
   label_order = var.label_order
   repository  = var.repository
   managedby   = var.managedby
-  extra_tags = var.tags
+  extra_tags  = var.tags
 }
 
 resource "aws_security_group" "default" {
