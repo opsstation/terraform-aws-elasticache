@@ -1,9 +1,9 @@
 provider "aws" {
-  region = "eu-west-1"
+  region = "ap-south-1"
 }
 
 module "vpc" {
-  source                              = "git::git@github.com:opsstation/terraform-aws-vpc.git"
+  source                              = "git::https://github.com/opsstation/terraform-aws-vpc.git?ref=v1.0.0"
   name                                = "app"
   environment                         = "test"
   cidr_block                          = "10.0.0.0/16"
@@ -15,11 +15,11 @@ module "vpc" {
 }
 
 module "subnet" {
-  source             = "git::git@github.com:opsstation/terraform-aws-subnet.git"
+  source             = "git::https://github.com/opsstation/terraform-aws-subnet.git?ref=v1.0.0"
   name               = "app"
   environment        = "test"
-  availability_zones = ["eu-west-1a"]
-  vpc_id             = module.vpc.vpc_id
+  availability_zones = ["ap-south-1a"]
+  vpc_id             = module.vpc.id
   type               = "public"
   igw_id             = module.vpc.igw_id
   ipv4_public_cidrs  = ["10.0.1.0/24"]
@@ -34,7 +34,7 @@ module "redis-cluster" {
   label_order = ["environment", "name"]
 
 
-  vpc_id        = module.vpc.vpc_id
+  vpc_id        = module.vpc.id
   allowed_ip    = [module.vpc.vpc_cidr_block]
   allowed_ports = [6379]
 
@@ -45,7 +45,7 @@ module "redis-cluster" {
   port                        = 6379
   node_type                   = "cache.t2.micro"
   subnet_ids                  = module.subnet.public_subnet_id
-  availability_zones          = ["eu-west-1a"]
+  availability_zones          = ["ap-south-1a"]
   num_cache_nodes             = 1
   snapshot_retention_limit    = 7
   automatic_failover_enabled  = true

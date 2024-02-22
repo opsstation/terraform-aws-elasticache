@@ -1,9 +1,9 @@
 provider "aws" {
-  region = "eu-west-1"
+  region = "ap-south-1"
 }
 
 module "vpc" {
-  source                              = "git::git@github.com:opsstation/terraform-aws-vpc.git"
+  source                              = "git::https://github.com/opsstation/terraform-aws-vpc.git?ref=v1.0.0"
   name                                = "app"
   environment                         = "test"
   cidr_block                          = "10.0.0.0/16"
@@ -15,11 +15,11 @@ module "vpc" {
 }
 
 module "subnet" {
-  source             = "git::git@github.com:opsstation/terraform-aws-subnet.git"
+  source             = "git::https://github.com/opsstation/terraform-aws-subnet.git?ref=v1.0.0"
   name               = "app"
   environment        = "test"
-  availability_zones = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
-  vpc_id             = module.vpc.vpc_id
+  availability_zones = ["ap-south-1a", "ap-south-1b", "ap-south-1c"]
+  vpc_id             = module.vpc.id
   type               = "public"
   igw_id             = module.vpc.igw_id
   ipv4_public_cidrs  = ["10.0.1.0/24", "10.0.13.0/24", "10.0.18.0/24"]
@@ -33,13 +33,13 @@ module "redis" {
   environment = "test"
   label_order = ["name", "environment"]
 
-  vpc_id        = module.vpc.vpc_id
+  vpc_id        = module.vpc.id
   allowed_ip    = [module.vpc.vpc_cidr_block]
   allowed_ports = [6379]
 
   cluster_replication_enabled = true
   engine                      = "redis"
-  engine_version              = "7.0"
+  engine_version              = "7.1"
   parameter_group_name        = "default.redis7"
   port                        = 6379
   node_type                   = "cache.r6g.large"
