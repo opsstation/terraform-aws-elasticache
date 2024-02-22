@@ -177,7 +177,7 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.7.3 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.9.0 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | >= 3.0, < 4.0 |
 
